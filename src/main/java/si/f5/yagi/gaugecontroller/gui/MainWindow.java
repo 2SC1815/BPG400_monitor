@@ -170,10 +170,10 @@ public class MainWindow extends JFrame {
         Container container = this.getContentPane();
         container.add(tabbedPane);
         
+        this.connectGauge(Profile.getPort());
+        
         plotUpdate = new Timer();
         
-        this.connectGauge(Profile.getPort());
-
         plotUpdate.scheduleAtFixedRate(new TimerTask() {
         	@Override
         	public void run() {
@@ -189,7 +189,7 @@ public class MainWindow extends JFrame {
         		plot.repaint();
         	}
         }, 10, 200);
-        
+
         this.setVisible(true);
 
 	}
