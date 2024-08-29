@@ -2,6 +2,8 @@ package si.f5.yagi.gaugecontroller.gauge;
 
 import java.util.function.Consumer;
 
+import javax.sound.midi.Receiver;
+
 import com.fazecast.jSerialComm.SerialPort;
 
 public class BPG400 {
@@ -133,16 +135,17 @@ public class BPG400 {
 					
 					this.port.readBytes(buffer, buffer.length);
 					this.port.flushIOBuffers();
-					
+
 					checksum = 5;
 					for (int o=0; o<buffer.length-1; o++) {
 						checksum += (int)(buffer[o]&0xFF);
 					}
 					checksum &= 0xFF;
 					
-					if (checksum != buffer[6]) {
+					if (checksum != (int)(buffer[6]&0xFF)) {
 						continue;
 					}
+					
 					
 					this.func.accept(buffer);
 				}
